@@ -6,4 +6,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Modules\Movies\CinemaBookingSystem.Modules.Movies.Presentation\CinemaBookingSystem.Modules.Movies.Presentation.csproj" />
+    <ProjectReference Include="..\..\Modules\Payments\CinemaBookingSystem.Modules.Payments.Presentation\CinemaBookingSystem.Modules.Payments.Presentation.csproj" />
+    <ProjectReference Include="..\..\Modules\Reservations\CinemaBookingSystem.Modules.Reservations.Presentation\CinemaBookingSystem.Modules.Reservations.Presentation.csproj" />
+    <ProjectReference Include="..\..\Modules\Showtimes\CinemaBookingSystem.Modules.Showtimes.Presentation\CinemaBookingSystem.Modules.Showtimes.Presentation.csproj" />
+    <ProjectReference Include="..\..\Modules\Users\CinemaBookingSystem.Modules.Users.Presentation\CinemaBookingSystem.Modules.Users.Presentation.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -6,4 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\CinemaBookingSystem.Shared.Application\CinemaBookingSystem.Shared.Application.csproj" />
+  </ItemGroup>
+
 </Project>

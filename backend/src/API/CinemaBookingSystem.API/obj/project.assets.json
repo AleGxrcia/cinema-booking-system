@@ -1,11 +1,124 @@
 {
   "version": 3,
   "targets": {
-    "net8.0": {}
+    "net8.0": {
+      "CinemaBookingSystem.Modules.Movies.Presentation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "CinemaBookingSystem.Shared.Presentation": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Movies.Presentation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Movies.Presentation.dll": {}
+        }
+      },
+      "CinemaBookingSystem.Modules.Payments.Presentation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "CinemaBookingSystem.Shared.Presentation": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Payments.Presentation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Payments.Presentation.dll": {}
+        }
+      },
+      "CinemaBookingSystem.Modules.Reservations.Presentation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "CinemaBookingSystem.Shared.Presentation": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Reservations.Presentation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Reservations.Presentation.dll": {}
+        }
+      },
+      "CinemaBookingSystem.Modules.Showtimes.Presentation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "CinemaBookingSystem.Shared.Presentation": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Showtimes.Presentation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Showtimes.Presentation.dll": {}
+        }
+      },
+      "CinemaBookingSystem.Modules.Users.Presentation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "CinemaBookingSystem.Shared.Presentation": "1.0.0"
+        },
+        "compile": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Users.Presentation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CinemaBookingSystem.Modules.Users.Presentation.dll": {}
+        }
+      },
+      "CinemaBookingSystem.Shared.Presentation/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "compile": {
+          "bin/placeholder/CinemaBookingSystem.Shared.Presentation.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/CinemaBookingSystem.Shared.Presentation.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "CinemaBookingSystem.Modules.Movies.Presentation/1.0.0": {
+      "type": "project",
+      "path": "../../Modules/Movies/CinemaBookingSystem.Modules.Movies.Presentation/CinemaBookingSystem.Modules.Movies.Presentation.csproj",
+      "msbuildProject": "../../Modules/Movies/CinemaBookingSystem.Modules.Movies.Presentation/CinemaBookingSystem.Modules.Movies.Presentation.csproj"
+    },
+    "CinemaBookingSystem.Modules.Payments.Presentation/1.0.0": {
+      "type": "project",
+      "path": "../../Modules/Payments/CinemaBookingSystem.Modules.Payments.Presentation/CinemaBookingSystem.Modules.Payments.Presentation.csproj",
+      "msbuildProject": "../../Modules/Payments/CinemaBookingSystem.Modules.Payments.Presentation/CinemaBookingSystem.Modules.Payments.Presentation.csproj"
+    },
+    "CinemaBookingSystem.Modules.Reservations.Presentation/1.0.0": {
+      "type": "project",
+      "path": "../../Modules/Reservations/CinemaBookingSystem.Modules.Reservations.Presentation/CinemaBookingSystem.Modules.Reservations.Presentation.csproj",
+      "msbuildProject": "../../Modules/Reservations/CinemaBookingSystem.Modules.Reservations.Presentation/CinemaBookingSystem.Modules.Reservations.Presentation.csproj"
+    },
+    "CinemaBookingSystem.Modules.Showtimes.Presentation/1.0.0": {
+      "type": "project",
+      "path": "../../Modules/Showtimes/CinemaBookingSystem.Modules.Showtimes.Presentation/CinemaBookingSystem.Modules.Showtimes.Presentation.csproj",
+      "msbuildProject": "../../Modules/Showtimes/CinemaBookingSystem.Modules.Showtimes.Presentation/CinemaBookingSystem.Modules.Showtimes.Presentation.csproj"
+    },
+    "CinemaBookingSystem.Modules.Users.Presentation/1.0.0": {
+      "type": "project",
+      "path": "../../Modules/Users/CinemaBookingSystem.Modules.Users.Presentation/CinemaBookingSystem.Modules.Users.Presentation.csproj",
+      "msbuildProject": "../../Modules/Users/CinemaBookingSystem.Modules.Users.Presentation/CinemaBookingSystem.Modules.Users.Presentation.csproj"
+    },
+    "CinemaBookingSystem.Shared.Presentation/1.0.0": {
+      "type": "project",
+      "path": "../../Shared/CinemaBookingSystem.Shared.Presentation/CinemaBookingSystem.Shared.Presentation.csproj",
+      "msbuildProject": "../../Shared/CinemaBookingSystem.Shared.Presentation/CinemaBookingSystem.Shared.Presentation.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net8.0": []
+    "net8.0": [
+      "CinemaBookingSystem.Modules.Movies.Presentation >= 1.0.0",
+      "CinemaBookingSystem.Modules.Payments.Presentation >= 1.0.0",
+      "CinemaBookingSystem.Modules.Reservations.Presentation >= 1.0.0",
+      "CinemaBookingSystem.Modules.Showtimes.Presentation >= 1.0.0",
+      "CinemaBookingSystem.Modules.Users.Presentation >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\aleja\\.nuget\\packages\\": {},
@@ -38,7 +151,23 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Movies\\CinemaBookingSystem.Modules.Movies.Presentation\\CinemaBookingSystem.Modules.Movies.Presentation.csproj": {
+              "projectPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Movies\\CinemaBookingSystem.Modules.Movies.Presentation\\CinemaBookingSystem.Modules.Movies.Presentation.csproj"
+            },
+            "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Payments\\CinemaBookingSystem.Modules.Payments.Presentation\\CinemaBookingSystem.Modules.Payments.Presentation.csproj": {
+              "projectPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Payments\\CinemaBookingSystem.Modules.Payments.Presentation\\CinemaBookingSystem.Modules.Payments.Presentation.csproj"
+            },
+            "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Reservations\\CinemaBookingSystem.Modules.Reservations.Presentation\\CinemaBookingSystem.Modules.Reservations.Presentation.csproj": {
+              "projectPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Reservations\\CinemaBookingSystem.Modules.Reservations.Presentation\\CinemaBookingSystem.Modules.Reservations.Presentation.csproj"
+            },
+            "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Showtimes\\CinemaBookingSystem.Modules.Showtimes.Presentation\\CinemaBookingSystem.Modules.Showtimes.Presentation.csproj": {
+              "projectPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Showtimes\\CinemaBookingSystem.Modules.Showtimes.Presentation\\CinemaBookingSystem.Modules.Showtimes.Presentation.csproj"
+            },
+            "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Users\\CinemaBookingSystem.Modules.Users.Presentation\\CinemaBookingSystem.Modules.Users.Presentation.csproj": {
+              "projectPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Modules\\Users\\CinemaBookingSystem.Modules.Users.Presentation\\CinemaBookingSystem.Modules.Users.Presentation.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
