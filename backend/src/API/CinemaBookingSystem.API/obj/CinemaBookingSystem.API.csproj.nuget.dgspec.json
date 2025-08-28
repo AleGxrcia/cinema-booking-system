@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\API\\CinemaBookingSystem.API\\CinemaBookingSystem.API.csproj": {}
+    "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Api\\CinemaBookingSystem.Api\\CinemaBookingSystem.Api.csproj": {}
   },
   "projects": {
-    "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\API\\CinemaBookingSystem.API\\CinemaBookingSystem.API.csproj": {
+    "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Api\\CinemaBookingSystem.Api\\CinemaBookingSystem.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\API\\CinemaBookingSystem.API\\CinemaBookingSystem.API.csproj",
-        "projectName": "CinemaBookingSystem.API",
-        "projectPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\API\\CinemaBookingSystem.API\\CinemaBookingSystem.API.csproj",
+        "projectUniqueName": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Api\\CinemaBookingSystem.Api\\CinemaBookingSystem.Api.csproj",
+        "projectName": "CinemaBookingSystem.Api",
+        "projectPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Api\\CinemaBookingSystem.Api\\CinemaBookingSystem.Api.csproj",
         "packagesPath": "C:\\Users\\aleja\\.nuget\\packages\\",
-        "outputPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\API\\CinemaBookingSystem.API\\obj\\",
+        "outputPath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Api\\CinemaBookingSystem.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,12 +49,6 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.6.2, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",

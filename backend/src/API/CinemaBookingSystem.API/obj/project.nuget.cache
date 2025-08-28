@@ -1,15 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LydzRBe1aX8=",
+  "dgSpecHash": "f3Fo3rDM/Fw=",
   "success": true,
-  "projectFilePath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\API\\CinemaBookingSystem.API\\CinemaBookingSystem.API.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\aleja\\.nuget\\packages\\microsoft.extensions.apidescription.server\\6.0.5\\microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
-    "C:\\Users\\aleja\\.nuget\\packages\\microsoft.openapi\\1.6.14\\microsoft.openapi.1.6.14.nupkg.sha512",
-    "C:\\Users\\aleja\\.nuget\\packages\\swashbuckle.aspnetcore\\6.6.2\\swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
-    "C:\\Users\\aleja\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.6.2\\swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
-    "C:\\Users\\aleja\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.6.2\\swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",
-    "C:\\Users\\aleja\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.6.2\\swashbuckle.aspnetcore.swaggerui.6.6.2.nupkg.sha512"
-  ],
+  "projectFilePath": "D:\\Dev\\Projects\\cinema-booking-system\\backend\\src\\Api\\CinemaBookingSystem.Api\\CinemaBookingSystem.Api.csproj",
+  "expectedPackageFiles": [],
   "logs": []
 }
