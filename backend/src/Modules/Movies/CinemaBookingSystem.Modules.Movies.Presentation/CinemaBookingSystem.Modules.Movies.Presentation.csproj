@@ -8,6 +8,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\CinemaBookingSystem.Shared.Presentation\CinemaBookingSystem.Shared.Presentation.csproj" />
+    <ProjectReference Include="..\CinemaBookingSystem.Modules.Movies.Infrastructure\CinemaBookingSystem.Modules.Movies.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
 
 </Project>
