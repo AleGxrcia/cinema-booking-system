@@ -69,6 +69,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaBookingSystem.Shared.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaBookingSystem.Shared.Presentation", "Shared\CinemaBookingSystem.Shared.Presentation\CinemaBookingSystem.Shared.Presentation.csproj", "{4997FAAC-1D9A-4FDF-8937-F342B2BC5FB7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CinemaBookingSystem.Modules.Movies", "Modules\Movies\CinemaBookingSystem.Modules.Movies\CinemaBookingSystem.Modules.Movies.csproj", "{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -379,6 +381,18 @@ Global
 		{4997FAAC-1D9A-4FDF-8937-F342B2BC5FB7}.Release|x64.Build.0 = Release|Any CPU
 		{4997FAAC-1D9A-4FDF-8937-F342B2BC5FB7}.Release|x86.ActiveCfg = Release|Any CPU
 		{4997FAAC-1D9A-4FDF-8937-F342B2BC5FB7}.Release|x86.Build.0 = Release|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Debug|x64.Build.0 = Debug|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Debug|x86.Build.0 = Debug|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Release|x64.ActiveCfg = Release|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Release|x64.Build.0 = Release|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Release|x86.ActiveCfg = Release|Any CPU
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -414,5 +428,6 @@ Global
 		{4AEBFA93-07BB-40A5-BAEB-B761EF6AE5BB} = {4F52FD11-658E-A102-6CD3-7D7C16FFA15B}
 		{98E58001-40F5-4E03-9210-DC7F2B48E3D8} = {4F52FD11-658E-A102-6CD3-7D7C16FFA15B}
 		{4997FAAC-1D9A-4FDF-8937-F342B2BC5FB7} = {4F52FD11-658E-A102-6CD3-7D7C16FFA15B}
+		{5C759CEB-F877-4817-B4E5-3C3A6682FBEF} = {900448DC-4253-47F1-9BC5-49F720760C76}
 	EndGlobalSection
 EndGlobal
