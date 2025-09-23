@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CinemaBookingSystem.Modules.Movies.Application\CinemaBookingSystem.Modules.Movies.Application.csproj" />
+    <ProjectReference Include="..\CinemaBookingSystem.Modules.Movies.Infrastructure\CinemaBookingSystem.Modules.Movies.Infrastructure.csproj" />
+    <ProjectReference Include="..\CinemaBookingSystem.Modules.Movies.Presentation\CinemaBookingSystem.Modules.Movies.Presentation.csproj" />
+  </ItemGroup>
+
+</Project>
