@@ -1,3 +1,4 @@
+using CinemaBookingSystem.Shared.Application.Common;
 using FluentValidation;
 using MediatR;
 
@@ -6,6 +7,7 @@ namespace CinemaBookingSystem.Shared.Application.Behaviors;
 public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : notnull
+    where TResponse : Result
 {
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
@@ -26,7 +28,12 @@ public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReq
 
         if (failures.Count != 0)
         {
-            throw new ValidationException(failures);
+            var error = Error.Validation(
+                "VALIDATION_ERROR",
+                string.Join("; ", failures.Select(f => f.ErrorMessage))
+            );
+
+            return (TResponse)(object)Result.Failure(error);
         }
 
         return await next(cancellationToken);
