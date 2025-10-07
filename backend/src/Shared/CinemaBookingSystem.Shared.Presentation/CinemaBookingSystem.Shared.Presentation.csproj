@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CinemaBookingSystem.Shared.Application\CinemaBookingSystem.Shared.Application.csproj" />
     <ProjectReference Include="..\CinemaBookingSystem.Shared.Infrastructure\CinemaBookingSystem.Shared.Infrastructure.csproj" />
   </ItemGroup>
 
