@@ -27,7 +27,7 @@ public sealed record Error
     public static Error Failure(string code, string message) =>
         new(code, message, ErrorType.Failure);
 
-    public static Error Unathorized(string code, string message) =>
+    public static Error Unauthorized(string code, string message) =>
         new(code, message, ErrorType.Unauthorized);
 
     public static Error Forbidden(string code, string message) =>
