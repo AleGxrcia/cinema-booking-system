@@ -1,4 +1,4 @@
-using CinemaBookingSystem.Shared.Application.Common;
+using CinemaBookingSystem.Shared.Domain.Common;
 using MediatR;
 
 namespace CinemaBookingSystem.Shared.Application.Messaging;

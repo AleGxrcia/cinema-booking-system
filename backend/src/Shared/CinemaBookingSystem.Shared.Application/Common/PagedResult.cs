@@ -1,3 +1,5 @@
+using CinemaBookingSystem.Shared.Domain.Common;
+
 namespace CinemaBookingSystem.Shared.Application.Common;
 
 public sealed class PagedResult<TValue> : Result<IReadOnlyList<TValue>>

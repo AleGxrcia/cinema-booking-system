@@ -1,4 +1,4 @@
-namespace CinemaBookingSystem.Shared.Application.Common;
+namespace CinemaBookingSystem.Shared.Domain.Common;
 
 public sealed record Error
 {
@@ -12,7 +12,7 @@ public sealed record Error
         Message = message;
         Type = type;
     }
-
+    
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.None);
 
     public static Error Validation(string code, string message) =>

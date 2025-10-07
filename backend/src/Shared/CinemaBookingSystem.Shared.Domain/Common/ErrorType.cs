@@ -1,4 +1,4 @@
-namespace CinemaBookingSystem.Shared.Application.Common;
+namespace CinemaBookingSystem.Shared.Domain.Common;
 
 public enum ErrorType
 {
