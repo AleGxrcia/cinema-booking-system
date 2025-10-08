@@ -4,6 +4,8 @@ namespace CinemaBookingSystem.Modules.Movies.Domain.ValueObjects;
 
 public record MovieTitle
 {
+    private const int MaxLength = 200;
+
     public string Value { get; } = default!;
     public string NormalizedValue { get; } = default!;
 
@@ -13,22 +15,20 @@ public record MovieTitle
 
     private MovieTitle(string value)
     {
-        if (string.IsNullOrWhiteSpace(value))
-        {
-            throw new DomainException("Movie title cannot be empty");
-        }
-
-        if (value.Length > 200)
-        {
-            throw new DomainException("Movie title cannot exceed 200 characters");
-        }
-
         Value = value.Trim();
         NormalizedValue = NormalizeTitle(value);
     }
 
-    public static MovieTitle Create(string value)
+    public static Result<MovieTitle> Create(string value)
     {
+        if (string.IsNullOrWhiteSpace(value))
+            return Error.Validation(
+                "MovieTitle.Empty", "Movie title cannot be empty");
+
+        if (value.Length > MaxLength)
+            return Error.Validation(
+                "MovieTitle.TooLong", $"Movie title cannot exceed {MaxLength} characters");
+
         return new MovieTitle(value);
     }
 
@@ -37,8 +37,5 @@ public record MovieTitle
         return string.Concat(title.ToLowerInvariant().Where(char.IsLetterOrDigit));
     }
 
-    public override string ToString()
-    {
-        return Value;
-    }
+    public override string ToString() => Value;
 }
