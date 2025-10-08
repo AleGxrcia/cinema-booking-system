@@ -1,4 +1,5 @@
 using CinemaBookingSystem.Modules.Movies.Domain.Enums;
+using CinemaBookingSystem.Modules.Movies.Domain.Errors;
 using CinemaBookingSystem.Shared.Domain.Abstractions;
 using CinemaBookingSystem.Shared.Domain.Common;
 
@@ -6,6 +7,9 @@ namespace CinemaBookingSystem.Modules.Movies.Domain.Entities;
 
 public class MovieCast : Entity<Guid>
 {
+    private const int MinPersonNameLength = 2;
+    private const int MaxPersonNameLength = 100;
+
     public Guid MovieId { get; private set; }
     public string PersonName { get; private set; } = default!;
     public CastRole Role { get; private set; }
@@ -16,54 +20,67 @@ public class MovieCast : Entity<Guid>
     {
     }
 
-    public MovieCast(Guid id, Guid movieId, string personName, CastRole role, int order = 0) : base(id)
+    private MovieCast(Guid id, Guid movieId, string personName, CastRole role, int order = 0) : base(id)
     {
-        if (movieId == Guid.Empty)
-        {
-            throw new DomainException("El ID de la película es obligatorio");
-        }
-
         MovieId = movieId;
-        PersonName = ValidatePersonName(personName);
+        PersonName = personName;
         Role = role;
-        Order = ValidateOrder(order);
+        Order = order;
         CreatedAt = DateTime.UtcNow;
     }
-
-    public void UpdateInformation(string personName, CastRole role, int order)
+    
+    public static Result<MovieCast> Create(Guid id, Guid movieId, string personName, CastRole role, int order = 0)
     {
-        PersonName = ValidatePersonName(personName);
+        if (movieId == Guid.Empty)
+            return MovieCastErrors.MovieIdEmpty();
+
+        var personNameResult = ValidatePersonName(personName);
+        if (personNameResult.IsFailure)
+            return personNameResult.Error;
+
+        var orderResult = ValidateOrder(order);
+        if (orderResult.IsFailure)
+            return orderResult.Error;
+
+        return new MovieCast(id, movieId, personNameResult.Value, role, orderResult.Value);
+    }
+
+    public Result UpdateInformation(string personName, CastRole role, int order)
+    {
+        var personNameResult = ValidatePersonName(personName);
+        if (personNameResult.IsFailure)
+            return personNameResult.Error;
+
+        var orderResult = ValidateOrder(order);
+        if (orderResult.IsFailure)
+            return orderResult.Error;
+
+        PersonName = personNameResult.Value;
         Role = role;
-        Order = ValidateOrder(order);
+        Order = orderResult.Value;
         MarkAsUpdated();
+
+        return Result.Success();
     }
 
-    private static string ValidatePersonName(string actorName)
+    private static Result<string> ValidatePersonName(string personName)
     {
-        if (string.IsNullOrWhiteSpace(actorName))
-        {
-            throw new DomainException("El nombre del actor no puede estar vacío");
-        }
+        if (string.IsNullOrWhiteSpace(personName))
+            return MovieCastErrors.PersonNameEmpty();
 
-        if (actorName.Length < 2)
-        {
-            throw new DomainException("El nombre del actor debe tener al menos 2 caracteres");
-        }
+        if (personName.Length < MinPersonNameLength)
+            return MovieCastErrors.PersonNameTooShort(MinPersonNameLength);
 
-        if (actorName.Length > 100)
-        {
-            throw new DomainException("El nombre del actor no puede tener más de 100 caracteres");
-        }
+        if (personName.Length > MaxPersonNameLength)
+            return MovieCastErrors.PersonNameTooLong(MaxPersonNameLength);
 
-        return actorName.Trim();
+        return personName.Trim();
     }
 
-    private static int ValidateOrder(int order)
+    private static Result<int> ValidateOrder(int order)
     {
         if (order < 0)
-        {
-            throw new DomainException("El orden no puede ser negativo");
-        }
+            return MovieCastErrors.OrderNegative();
 
         return order;
     }

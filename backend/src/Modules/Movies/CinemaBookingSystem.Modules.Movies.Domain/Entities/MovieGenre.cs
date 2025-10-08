@@ -1,3 +1,4 @@
+using CinemaBookingSystem.Modules.Movies.Domain.Errors;
 using CinemaBookingSystem.Shared.Domain.Abstractions;
 using CinemaBookingSystem.Shared.Domain.Common;
 
@@ -14,20 +15,21 @@ public class MovieGenre : Entity<Guid>
     {
     }
 
-    public MovieGenre(Guid id, Guid movieId, Guid genreId) : base(id)
+    private MovieGenre(Guid id, Guid movieId, Guid genreId) : base(id)
     {
-        if (movieId == Guid.Empty)
-        {
-            throw new DomainException("El ID de la película no puede ser vacío");
-        }
-
-        if (genreId == Guid.Empty)
-        {
-            throw new DomainException("El ID del género no puede ser vacío");
-        }
-
         MovieId = movieId;
         GenreId = genreId;
         CreatedAt = DateTime.UtcNow;
+    }
+
+    public static Result<MovieGenre> Create(Guid id, Guid movieId, Guid genreId)
+    {
+        if (movieId == Guid.Empty)
+            return MovieGenreErrors.MovieIdEmpty();
+
+        if (genreId == Guid.Empty)
+            return MovieGenreErrors.GenreIdEmpty();
+
+        return new MovieGenre(id, movieId, genreId);
     }
 }
