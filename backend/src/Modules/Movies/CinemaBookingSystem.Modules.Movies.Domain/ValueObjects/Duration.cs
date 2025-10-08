@@ -28,9 +28,9 @@ public record Duration
         return new Duration(minutes);
     }
 
-    public static Duration FromTimeSpan(TimeSpan timeSpan)
+    public static Result<Duration> FromTimeSpan(TimeSpan timeSpan)
     {
-        return new Duration((int)timeSpan.TotalMinutes);
+        return FromMinutes((int)timeSpan.TotalMinutes);
     }
 
     public string ToFormattedString()
