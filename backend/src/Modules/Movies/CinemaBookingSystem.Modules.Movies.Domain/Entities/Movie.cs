@@ -1,4 +1,5 @@
 using CinemaBookingSystem.Modules.Movies.Domain.Enums;
+using CinemaBookingSystem.Modules.Movies.Domain.Errors;
 using CinemaBookingSystem.Modules.Movies.Domain.Events;
 using CinemaBookingSystem.Modules.Movies.Domain.ValueObjects;
 using CinemaBookingSystem.Shared.Domain.Abstractions;
@@ -8,6 +9,12 @@ namespace CinemaBookingSystem.Modules.Movies.Domain.Entities;
 
 public class Movie : AggregateRoot<Guid>
 {
+    private const int MaxDescriptionLength = 1000;
+    private const int MinReleaseYear = 1888;
+    private const int MaxYearsAhead = 5;
+    private const int MinCountryLength = 2;
+    private const int MaxCountryLength = 100;
+
     private readonly List<MovieGenre> _genres = [];
     private readonly List<MovieCast> _cast = [];
 
@@ -29,15 +36,15 @@ public class Movie : AggregateRoot<Guid>
     {
     }
 
-    public Movie(Guid id, MovieTitle title, string description, Duration duration,
-        int releaseYear, MovieLanguage language, string country, AgeRating ageRating = AgeRating.G) : base(id)
+    private Movie(Guid id, MovieTitle title, string description, Duration duration,
+        int releaseYear, MovieLanguage language, string country, AgeRating ageRating) : base(id)
     {
         Title = title;
-        Description = ValidateDescription(description);
+        Description = description;
         Duration = duration;
-        ReleaseYear = ValidateReleaseYear(releaseYear);
+        ReleaseYear = releaseYear;
         Language = language;
-        Country = ValidateCountry(country);
+        Country = country;
         AgeRating = ageRating;
         Status = MovieStatus.Active;
         CreatedAt = DateTime.UtcNow;
@@ -45,175 +52,184 @@ public class Movie : AggregateRoot<Guid>
         AddDomainEvent(new MovieCreatedEvent(Id, Title, Duration, ReleaseYear, Language, Country));
     }
 
-    public void UpdateInformation(MovieTitle title, string description, Duration duration,
-        string posterUrl, string trailerUrl)
+        public static Result<Movie> Create(Guid id, MovieTitle title, string description, Duration duration,
+            int releaseYear, MovieLanguage language, string country, AgeRating ageRating = AgeRating.G)
+    {
+        var descriptionResult = ValidateDescription(description);
+        if (descriptionResult.IsFailure)
+            return descriptionResult.Error;
+
+        var releaseYearResult = ValidateReleaseYear(releaseYear);
+        if (releaseYearResult.IsFailure)
+            return releaseYearResult.Error;
+
+        var countryResult = ValidateCountry(country);
+        if (countryResult.IsFailure)
+            return countryResult.Error;
+
+        return new Movie(
+            id,
+            title,
+            descriptionResult.Value,
+            duration,
+            releaseYearResult.Value,
+            language,
+            countryResult.Value,
+            ageRating
+        );
+    }
+
+    public Result UpdateInformation(MovieTitle title, string description, Duration duration,
+        string? posterUrl, string? trailerUrl)
     {
         if (Status != MovieStatus.Active)
-        {
-            throw new DomainException("No se puede actualizar una película inactiva");
-        }
+            return MovieErrors.CannotUpdateInactive();
+
+        var descriptionResult = ValidateDescription(description);
+        if (descriptionResult.IsFailure)
+            return descriptionResult.Error;
 
         Title = title;
-        Description = ValidateDescription(description);
+        Description = descriptionResult.Value;
         Duration = duration;
         PosterUrl = posterUrl;
         TrailerUrl = trailerUrl;
         MarkAsUpdated();
 
-        AddDomainEvent(new MovieUpdatedEvent(Id, Title, Description, Duration, posterUrl, trailerUrl));
+        AddDomainEvent(new MovieUpdatedEvent(Id, Title, Description, Duration,
+            posterUrl ?? string.Empty, trailerUrl ?? string.Empty));
+
+        return Result.Success();
     }
 
-    public void AddGenre(Genre genre)
+    public Result AddGenre(Genre genre)
     {
         if (genre == null)
-        {
-            throw new ArgumentNullException(nameof(genre));
-        }
+            return MovieErrors.GenreNull();
 
         if (!genre.IsActive)
-        {
-            throw new DomainException("No se puede asignar un género inactivo");
-        }
+            return MovieErrors.GenreInactive();
 
         if (_genres.Any(g => g.GenreId == genre.Id))
-        {
-            throw new DomainException("La película ya tiene asignado este género");
-        }
+            return MovieErrors.GenreAlreadyAssigned();
 
-        var movieGenre = new MovieGenre(Guid.NewGuid(), Id, genre.Id);
-        _genres.Add(movieGenre);
+        var movieGenreResult = MovieGenre.Create(Guid.NewGuid(), Id, genre.Id);
+        if (movieGenreResult.IsFailure)
+            return movieGenreResult.Error;
 
+        _genres.Add(movieGenreResult.Value);
         AddDomainEvent(new MovieGenreAddedEvent(Id, genre.Id));
+
+        return Result.Success();
     }
 
-    public void RemoveGenre(Guid genreId)
+    public Result RemoveGenre(Guid genreId)
     {
         var movieGenre = _genres.FirstOrDefault(g => g.GenreId == genreId);
         if (movieGenre == null)
-        {
-            throw new DomainException("La película no tiene asignado este género");
-        }
+            return MovieErrors.GenreNotAssigned();
 
         _genres.Remove(movieGenre);
-
         AddDomainEvent(new MovieGenreRemovedEvent(Id, genreId));
+
+        return Result.Success();
     }
 
-    public void AddCastMember(string personName, CastRole role)
+    public Result AddCastMember(string personName, CastRole role)
     {
-        if (string.IsNullOrWhiteSpace(personName))
-        {
-            throw new DomainException("El nombre de la persona es obligatorio");
-        }
+        var castResult = MovieCast.Create(Guid.NewGuid(), Id, personName, role);
+        if (castResult.IsFailure)
+            return castResult.Error;
 
-        var castMember = new MovieCast(Guid.NewGuid(), Id, personName, role);
-        _cast.Add(castMember);
+        _cast.Add(castResult.Value);
+        AddDomainEvent(new MovieCastAddedEvent(Id, castResult.Value.Id, personName, role));
 
-        AddDomainEvent(new MovieCastAddedEvent(Id, castMember.Id, personName, role));
+        return Result.Success();
     }
 
-    public void RemoveCastMember(Guid castId)
+    public Result RemoveCastMember(Guid castId)
     {
         var castMember = _cast.FirstOrDefault(c => c.Id == castId);
         if (castMember == null)
-        {
-            throw new DomainException("No se encontró el miembro del reparto");
-        }
+            return MovieErrors.CastMemberNotFound();
 
         _cast.Remove(castMember);
-
         AddDomainEvent(new MovieCastRemovedEvent(Id, castId, castMember.PersonName));
+
+        return Result.Success();
     }
 
-    public void Deactivate()
+    public Result Deactivate()
     {
         if (Status == MovieStatus.Inactive)
-        {
-            throw new DomainException("La película ya está inactiva");
-        }
+            return MovieErrors.AlreadyInactive();
 
         Status = MovieStatus.Inactive;
         MarkAsUpdated();
-
         AddDomainEvent(new MovieDeactivatedEvent(Id));
+
+        return Result.Success();
     }
 
-    public void Activate()
+    public Result Activate()
     {
         if (Status == MovieStatus.Active)
-        {
-            throw new DomainException("La película ya está activa");
-        }
+            return MovieErrors.AlreadyActive();
 
         Status = MovieStatus.Active;
         MarkAsUpdated();
-
         AddDomainEvent(new MovieActivatedEvent(Id));
+
+        return Result.Success();
     }
 
-    public void ChangeStatus(MovieStatus newStatus)
+    public Result ChangeStatus(MovieStatus newStatus)
     {
         if (Status == newStatus)
-        {
-            return;
-        }
+            return Result.Success();
 
         var previousStatus = Status;
         Status = newStatus;
         MarkAsUpdated();
-
         AddDomainEvent(new MovieStatusChangedEvent(Id, previousStatus, newStatus));
+
+        return Result.Success();
     }
 
-    private static string ValidateDescription(string description)
+    private static Result<string> ValidateDescription(string description)
     {
         if (string.IsNullOrWhiteSpace(description))
-        {
-            throw new DomainException("La descripción es obligatoria");
-        }
+            return MovieErrors.DescriptionEmpty();
 
-        if (description.Length > 1000)
-        {
-            throw new DomainException("La descripción no puede exceder 1000 caracteres");
-        }
+        if (description.Length > MaxDescriptionLength)
+            return MovieErrors.DescriptionTooLong(MaxDescriptionLength);
 
         return description.Trim();
     }
 
-    private static int ValidateReleaseYear(int releaseYear)
+    private static Result<int> ValidateReleaseYear(int releaseYear)
     {
         var currentYear = DateTime.Now.Year;
-        var minYear = 1888;
 
-        if (releaseYear < minYear)
-        {
-            throw new DomainException($"El año de lanzamiento no puede ser anterior a {minYear}");
-        }
+        if (releaseYear < MinReleaseYear)
+            return MovieErrors.ReleaseYearTooOld(MinReleaseYear);
 
-        if (releaseYear > currentYear + 5)
-        {
-            throw new DomainException("El año de lanzamiento no puede ser más de 5 años en el futuro");
-        }
+        if (releaseYear > currentYear + MaxYearsAhead)
+            return MovieErrors.ReleaseYearTooFuture(MaxYearsAhead);
 
         return releaseYear;
     }
 
-    private static string ValidateCountry(string country)
+    private static Result<string> ValidateCountry(string country)
     {
         if (string.IsNullOrWhiteSpace(country))
-        {
-            throw new DomainException("El país de origen no puede estar vacío");
-        }
+            return MovieErrors.CountryEmpty();
 
-        if (country.Length < 2)
-        {
-            throw new DomainException("El nombre del país debe tener al menos 2 caracteres");
-        }
+        if (country.Length < MinCountryLength)
+            return MovieErrors.CountryTooShort(MinCountryLength);
 
-        if (country.Length > 100)
-        {
-            throw new DomainException("El nombre del país no puede tener más de 100 caracteres");
-        }
+        if (country.Length > MaxCountryLength)
+            return MovieErrors.CountryTooLong(MaxCountryLength);
 
         return country.Trim();
     }
