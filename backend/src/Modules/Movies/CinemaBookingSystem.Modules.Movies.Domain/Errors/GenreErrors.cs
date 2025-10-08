@@ -8,12 +8,16 @@ public static class GenreErrors
         Error.Validation("Genre.Name.Empty", "Genre name cannot be empty");
 
     public static Error NameTooShort(int minLength) =>
-        Error.Validation("Genre.Name.TooShort", 
+        Error.Validation("Genre.Name.TooShort",
             $"Genre name must have at least {minLength} characters");
 
     public static Error NameTooLong(int maxLength) =>
-        Error.Validation("Genre.Name.TooLong", 
+        Error.Validation("Genre.Name.TooLong",
             $"Genre name cannot exceed {maxLength} characters");
+
+    public static Error NameAlreadyExists(string name) =>
+        Error.Conflict("Genre.Name.AlreadyExists",
+            $"A genre with the name '{name}' already exists");
 
     public static Error AlreadyActive() =>
         Error.Conflict("Genre.Status.AlreadyActive", "Genre is already active");
@@ -26,4 +30,8 @@ public static class GenreErrors
 
     public static Error NotFound(Guid genreId) =>
         Error.NotFound("Genre.NotFound", $"Genre with ID '{genreId}' was not found");
+
+    public static Error NotFoundByName(string name) =>
+        Error.NotFound("Genre.NotFound.ByName", 
+            $"Genre with name '{name}' was not found");
 }

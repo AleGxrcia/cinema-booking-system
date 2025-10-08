@@ -33,6 +33,11 @@ public static class MovieErrors
         Error.Validation("Movie.Country.TooLong", 
             $"Country name cannot exceed {maxLength} characters");
 
+    // Conflict errors
+    public static Error DuplicateMovieExists(string title, int year) =>
+        Error.Conflict("Movie.Duplicate", 
+            $"A movie with the title '{title}' released in {year} already exists");
+
     // Status
     public static Error AlreadyInactive() =>
         Error.Conflict("Movie.Status.AlreadyInactive", "Movie is already inactive");
