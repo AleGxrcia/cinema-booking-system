@@ -1,3 +1,4 @@
+using CinemaBookingSystem.Modules.Movies.Domain.Errors;
 using CinemaBookingSystem.Modules.Movies.Domain.Events;
 using CinemaBookingSystem.Shared.Domain.Abstractions;
 using CinemaBookingSystem.Shared.Domain.Common;
@@ -6,6 +7,9 @@ namespace CinemaBookingSystem.Modules.Movies.Domain.Entities;
 
 public class Genre : AggregateRoot<Guid>
 {
+    private const int MinNameLength = 2;
+    private const int MaxNameLength = 50;
+
     public string Name { get; private set; } = default!;
     public bool IsActive { get; private set; }
 
@@ -13,72 +17,77 @@ public class Genre : AggregateRoot<Guid>
     {
     }
 
-    public Genre(Guid id, string name) : base(id)
+    private Genre(Guid id, string name) : base(id)
     {
-        Name = ValidateName(name);
+        Name = name;
         IsActive = true;
         CreatedAt = DateTime.UtcNow;
-
-        AddDomainEvent(new GenreCreatedEvent(Id, Name));
     }
 
-    public void UpdateInformation(string name)
+    public static Result<Genre> Create(Guid id, string name)
+    {
+        var nameResult = ValidateName(name);
+        if (nameResult.IsFailure)
+            return nameResult.Error;
+
+        var genre = new Genre(id, nameResult.Value);
+        genre.AddDomainEvent(new GenreCreatedEvent(id, nameResult.Value));
+
+        return genre;
+    }
+
+    public Result UpdateInformation(string name)
     {
         if (!IsActive)
-        {
-            throw new DomainException("No se puede actualizar un género inactivo");
-        }
+            return GenreErrors.CannotUpdateInactive();
 
-        Name = ValidateName(name);
+        var nameResult = ValidateName(name);
+        if (nameResult.IsFailure)
+            return nameResult.Error;
+
+        Name = nameResult.Value;
         MarkAsUpdated();
-
         AddDomainEvent(new GenreUpdatedEvent(Id, Name));
+
+        return Result.Success();
     }
 
-    public void Deactivate()
+
+    public Result Activate()
+    {
+        if (IsActive)
+            return GenreErrors.AlreadyActive();
+
+        IsActive = true;
+        MarkAsUpdated();
+        AddDomainEvent(new GenreActivatedEvent(Id));
+
+        return Result.Success();
+    }
+
+    public Result Deactivate()
     {
         if (!IsActive)
-        {
-            throw new DomainException("El género ya está inactivo");
-        }
+            return GenreErrors.AlreadyInactive();
 
         IsActive = false;
         MarkAsUpdated();
-
         AddDomainEvent(new GenreDeactivatedEvent(Id));
+
+        return Result.Success();
     }
 
-    public void Activate()
-    {
-        if (IsActive)
-        {
-            throw new DomainException("El género ya está activo");
-        }
-
-        IsActive = true;
-        MarkAsUpdated();
-
-        AddDomainEvent(new GenreActivatedEvent(Id));
-    }
-
-    private static string ValidateName(string name)
+    private static Result<string> ValidateName(string name)
     {
         if (string.IsNullOrWhiteSpace(name))
-        {
-            throw new DomainException("El nombre del género no puede estar vacío");
-        }
+            return GenreErrors.NameEmpty();
 
-        if (name.Length < 2)
-        {
-            throw new DomainException("El nombre del género debe tener al menos 2 caracteres");
-        }
+        if (name.Length < MinNameLength)
+            return GenreErrors.NameTooShort(MinNameLength);
 
-        if (name.Length > 50)
-        {
-            throw new DomainException("El nombre del género no puede tener más de 50 caracteres");
-        }
+        if (name.Length > MaxNameLength)
+            return GenreErrors.NameTooLong(MaxNameLength);
 
         return name.Trim();
     }
-
 }

@@ -13,7 +13,7 @@ public sealed class MovieUpdatedEvent : DomainEventBase
     public string? TrailerUrl { get; init; }
 
     public MovieUpdatedEvent(Guid movieId, MovieTitle title, string description, Duration duration,
-        string posterUrl, string trailerUrl)
+        string? posterUrl, string? trailerUrl)
     {
         MovieId = movieId;
         Title = title;

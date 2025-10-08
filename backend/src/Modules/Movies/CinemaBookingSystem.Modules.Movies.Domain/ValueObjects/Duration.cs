@@ -4,25 +4,27 @@ namespace CinemaBookingSystem.Modules.Movies.Domain.ValueObjects;
 
 public record Duration
 {
+    private const int MaxMinutes = 600;
+
     public int TotalMinutes { get; }
 
     private Duration(int totalMinutes)
     {
-        if (totalMinutes <= 0)
-        {
-            throw new DomainException("La duración debe ser mayor a 0 minutos");
-        }
-
-        if (totalMinutes > 600)
-        {
-            throw new DomainException("La duración no puede ser mayor a 600 minutos (10 horas)");
-        }
-
         TotalMinutes = totalMinutes;
     }
 
-    public static Duration FromMinutes(int minutes)
+    public static Result<Duration> FromMinutes(int minutes)
     {
+        if (minutes <= 0)
+            return Error.Validation(
+                "Duration.Invalid",
+                "Duration must be greater than 0 minutes");
+
+        if (minutes > MaxMinutes)
+            return Error.Validation(
+                "Duration.TooLong",
+                $"Duration cannot exceed {MaxMinutes} minutes (10 hours)");
+
         return new Duration(minutes);
     }
 
@@ -37,14 +39,9 @@ public record Duration
         var minutes = TotalMinutes % 60;
 
         if (hours == 0) return $"{minutes}min";
-
         if (minutes == 0) return $"{hours}h";
-
         return $"{hours}h {minutes}min";
     }
 
-    public override string ToString()
-    {
-        return ToFormattedString();
-    }
+    public override string ToString() => ToFormattedString();
 }
