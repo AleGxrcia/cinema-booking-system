@@ -1,4 +1,8 @@
+using CinemaBookingSystem.Modules.Movies.Application.Abstractions.Data;
+using CinemaBookingSystem.Modules.Movies.Domain.Repositories;
 using CinemaBookingSystem.Modules.Movies.Infrastructure.Data.Contexts;
+using CinemaBookingSystem.Modules.Movies.Infrastructure.Data.Persistence;
+using CinemaBookingSystem.Modules.Movies.Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -16,6 +20,11 @@ public static class ServiceRegistration
             options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseSnakeCaseNamingConvention();
         });
+
+        services.AddScoped<IMovieRepository, MovieRepository>();
+        services.AddScoped<IGenreRepository, GenreRepository>();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }
