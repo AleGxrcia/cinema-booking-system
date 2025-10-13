@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\Shared\CinemaBookingSystem.Shared.Application\CinemaBookingSystem.Shared.Application.csproj" />
+    <ProjectReference Include="..\CinemaBookingSystem.Modules.Movies.Domain\CinemaBookingSystem.Modules.Movies.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Genres\Queries\" />
+    <Folder Include="Features\Movies\Queries\" />
   </ItemGroup>
 
 </Project>
