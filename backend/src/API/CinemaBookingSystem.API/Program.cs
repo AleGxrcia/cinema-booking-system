@@ -1,7 +1,13 @@
 using CinemaBookingSystem.Api.Extensions;
 using CinemaBookingSystem.Api.Middlewares;
+using CinemaBookingSystem.Shared.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddProblemDetails();
+
+builder.Services.AddSharedInfrastructure(builder.Configuration);
 
 var moduleAssemblies = new[]
 {
@@ -9,9 +15,6 @@ var moduleAssemblies = new[]
 };
 
 builder.Services.AddModules(builder.Configuration, moduleAssemblies);
-
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
-builder.Services.AddProblemDetails();
 
 var app = builder.Build();
 

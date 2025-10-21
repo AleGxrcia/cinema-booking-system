@@ -1,4 +1,4 @@
-namespace CinemaBookingSystem.Shared.Infrastructure.Data;
+namespace CinemaBookingSystem.Shared.Infrastructure.Data.Schemas;
 
 public static class Schemas
 {
