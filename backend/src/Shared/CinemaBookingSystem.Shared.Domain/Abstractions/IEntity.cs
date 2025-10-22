@@ -7,6 +7,6 @@ public interface IEntity<TId> : IEntity
 
 public interface IEntity
 {
-    DateTime? CreatedAt { get; }
+    DateTime CreatedAt { get; }
     DateTime? UpdatedAt { get; }
 }
