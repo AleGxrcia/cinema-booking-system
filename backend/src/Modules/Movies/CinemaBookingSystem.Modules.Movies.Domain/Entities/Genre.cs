@@ -21,7 +21,6 @@ public class Genre : AggregateRoot<Guid>
     {
         Name = name;
         IsActive = true;
-        CreatedAt = DateTime.UtcNow;
     }
 
     public static Result<Genre> Create(Guid id, string name)
@@ -31,7 +30,7 @@ public class Genre : AggregateRoot<Guid>
             return nameResult.Error;
 
         var genre = new Genre(id, nameResult.Value);
-        genre.AddDomainEvent(new GenreCreatedEvent(id, nameResult.Value));
+        genre.AddDomainEvent(new GenreCreatedEvent(id, nameResult.Value, genre.CreatedAt));
 
         return genre;
     }
@@ -45,9 +44,10 @@ public class Genre : AggregateRoot<Guid>
         if (nameResult.IsFailure)
             return nameResult.Error;
 
+        var previousName = Name;
         Name = nameResult.Value;
         MarkAsUpdated();
-        AddDomainEvent(new GenreUpdatedEvent(Id, Name));
+        AddDomainEvent(new GenreUpdatedEvent(Id, previousName, Name, UpdatedAt!.Value));
 
         return Result.Success();
     }
@@ -60,7 +60,7 @@ public class Genre : AggregateRoot<Guid>
 
         IsActive = true;
         MarkAsUpdated();
-        AddDomainEvent(new GenreActivatedEvent(Id));
+        AddDomainEvent(new GenreActivatedEvent(Id, UpdatedAt!.Value));
 
         return Result.Success();
     }
@@ -72,7 +72,7 @@ public class Genre : AggregateRoot<Guid>
 
         IsActive = false;
         MarkAsUpdated();
-        AddDomainEvent(new GenreDeactivatedEvent(Id));
+        AddDomainEvent(new GenreDeactivatedEvent(Id, UpdatedAt!.Value));
 
         return Result.Success();
     }

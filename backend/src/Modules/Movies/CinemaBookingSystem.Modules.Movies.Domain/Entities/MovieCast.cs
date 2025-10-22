@@ -26,7 +26,6 @@ public class MovieCast : Entity<Guid>
         PersonName = personName;
         Role = role;
         Order = order;
-        CreatedAt = DateTime.UtcNow;
     }
     
     public static Result<MovieCast> Create(Guid id, Guid movieId, string personName, CastRole role, int order = 0)

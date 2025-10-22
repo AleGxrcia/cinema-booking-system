@@ -19,7 +19,6 @@ public class MovieGenre : Entity<Guid>
     {
         MovieId = movieId;
         GenreId = genreId;
-        CreatedAt = DateTime.UtcNow;
     }
 
     public static Result<MovieGenre> Create(Guid id, Guid movieId, Guid genreId)
