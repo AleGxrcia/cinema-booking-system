@@ -3,7 +3,4 @@ using MediatR;
 
 namespace CinemaBookingSystem.Shared.Application.Messaging;
 
-public interface IQuery<out TResponse> : IRequest<TResponse>
-    where TResponse : Result
-{
-}
+public interface IQuery<TResponse> : IRequest<Result<TResponse>>;
