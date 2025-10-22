@@ -47,12 +47,9 @@ public class Movie : AggregateRoot<Guid>
         Country = country;
         AgeRating = ageRating;
         Status = MovieStatus.Active;
-        CreatedAt = DateTime.UtcNow;
-
-        AddDomainEvent(new MovieCreatedEvent(Id, Title, Duration, ReleaseYear, Language, Country));
     }
 
-        public static Result<Movie> Create(Guid id, MovieTitle title, string description, Duration duration,
+    public static Result<Movie> Create(Guid id, MovieTitle title, string description, Duration duration,
             int releaseYear, MovieLanguage language, string country, AgeRating ageRating = AgeRating.G)
     {
         var descriptionResult = ValidateDescription(description);
@@ -67,7 +64,7 @@ public class Movie : AggregateRoot<Guid>
         if (countryResult.IsFailure)
             return countryResult.Error;
 
-        return new Movie(
+        var movie = new Movie(
             id,
             title,
             descriptionResult.Value,
@@ -77,6 +74,20 @@ public class Movie : AggregateRoot<Guid>
             countryResult.Value,
             ageRating
         );
+
+        movie.AddDomainEvent(new MovieCreatedEvent(
+            movie.Id,
+            movie.Title,
+            movie.Description,
+            movie.Duration,
+            movie.ReleaseYear,
+            movie.Language,
+            movie.Country,
+            movie.AgeRating,
+            movie.Status,
+            movie.CreatedAt));
+
+        return movie;
     }
 
     public Result UpdateInformation(MovieTitle title, string description, Duration duration,
@@ -97,7 +108,7 @@ public class Movie : AggregateRoot<Guid>
         MarkAsUpdated();
 
         AddDomainEvent(new MovieUpdatedEvent(Id, Title, Description, Duration,
-            posterUrl ?? string.Empty, trailerUrl ?? string.Empty));
+            posterUrl ?? string.Empty, trailerUrl ?? string.Empty, UpdatedAt!.Value));
 
         return Result.Success();
     }
@@ -118,7 +129,8 @@ public class Movie : AggregateRoot<Guid>
             return movieGenreResult.Error;
 
         _genres.Add(movieGenreResult.Value);
-        AddDomainEvent(new MovieGenreAddedEvent(Id, genre.Id));
+        MarkAsUpdated();
+        AddDomainEvent(new MovieGenreAddedEvent(Id, genre.Id, genre.Name, UpdatedAt!.Value));
 
         return Result.Success();
     }
@@ -130,19 +142,22 @@ public class Movie : AggregateRoot<Guid>
             return MovieErrors.GenreNotAssigned();
 
         _genres.Remove(movieGenre);
-        AddDomainEvent(new MovieGenreRemovedEvent(Id, genreId));
+        MarkAsUpdated();
+        AddDomainEvent(new MovieGenreRemovedEvent(Id, genreId, movieGenre.Genre.Name, UpdatedAt!.Value));
 
         return Result.Success();
     }
 
-    public Result AddCastMember(string personName, CastRole role)
+    public Result AddCastMember(string personName, CastRole role, int order)
     {
-        var castResult = MovieCast.Create(Guid.NewGuid(), Id, personName, role);
+        var castResult = MovieCast.Create(Guid.NewGuid(), Id, personName, role, order);
         if (castResult.IsFailure)
             return castResult.Error;
 
         _cast.Add(castResult.Value);
-        AddDomainEvent(new MovieCastAddedEvent(Id, castResult.Value.Id, personName, role));
+        MarkAsUpdated();
+        AddDomainEvent(new MovieCastAddedEvent(Id, castResult.Value.Id, personName, role,
+            order, UpdatedAt!.Value));
 
         return Result.Success();
     }
@@ -154,7 +169,8 @@ public class Movie : AggregateRoot<Guid>
             return MovieErrors.CastMemberNotFound();
 
         _cast.Remove(castMember);
-        AddDomainEvent(new MovieCastRemovedEvent(Id, castId, castMember.PersonName));
+        MarkAsUpdated();
+        AddDomainEvent(new MovieCastRemovedEvent(Id, castId, castMember.PersonName, UpdatedAt!.Value));
 
         return Result.Success();
     }
@@ -166,7 +182,7 @@ public class Movie : AggregateRoot<Guid>
 
         Status = MovieStatus.Inactive;
         MarkAsUpdated();
-        AddDomainEvent(new MovieDeactivatedEvent(Id));
+        AddDomainEvent(new MovieDeactivatedEvent(Id, UpdatedAt!.Value));
 
         return Result.Success();
     }
@@ -178,7 +194,7 @@ public class Movie : AggregateRoot<Guid>
 
         Status = MovieStatus.Active;
         MarkAsUpdated();
-        AddDomainEvent(new MovieActivatedEvent(Id));
+        AddDomainEvent(new MovieActivatedEvent(Id, UpdatedAt!.Value));
 
         return Result.Success();
     }
@@ -191,7 +207,7 @@ public class Movie : AggregateRoot<Guid>
         var previousStatus = Status;
         Status = newStatus;
         MarkAsUpdated();
-        AddDomainEvent(new MovieStatusChangedEvent(Id, previousStatus, newStatus));
+        AddDomainEvent(new MovieStatusChangedEvent(Id, previousStatus, newStatus, UpdatedAt!.Value));
 
         return Result.Success();
     }

@@ -2,8 +2,10 @@ using CinemaBookingSystem.Shared.Domain.Events;
 
 namespace CinemaBookingSystem.Modules.Movies.Domain.Events;
 
-public sealed class GenreUpdatedEvent(Guid genreId, string name) : DomainEventBase
+public sealed class GenreUpdatedEvent(Guid genreId, string previousName, string newName, DateTime updatedAt) : DomainEventBase
 {
     public Guid GenreId { get; init; } = genreId;
-    public string Name { get; init; } = name;
+    public string PreviousName { get; init; } = previousName;
+    public string NewName { get; init; } = newName;
+    public DateTime UpdatedAt { get; init; } = updatedAt;
 }
