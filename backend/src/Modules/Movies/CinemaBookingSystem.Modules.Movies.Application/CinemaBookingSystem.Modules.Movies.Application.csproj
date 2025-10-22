@@ -11,9 +11,4 @@
     <ProjectReference Include="..\CinemaBookingSystem.Modules.Movies.Domain\CinemaBookingSystem.Modules.Movies.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Features\Genres\Queries\" />
-    <Folder Include="Features\Movies\Queries\" />
-  </ItemGroup>
-
 </Project>
