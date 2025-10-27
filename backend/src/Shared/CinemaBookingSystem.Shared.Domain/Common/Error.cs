@@ -5,18 +5,30 @@ public sealed record Error
     public string Code { get; }
     public string Message { get; }
     public ErrorType Type { get; }
+    public IReadOnlyList<ValidationErrorDetail>? ValidationErrors { get; }
 
-    private Error(string code, string message, ErrorType type)
+    private Error(
+        string code,
+        string message,
+        ErrorType type,
+        IReadOnlyList<ValidationErrorDetail>? validationErrors = null)
     {
         Code = code;
         Message = message;
         Type = type;
+        ValidationErrors = validationErrors;
     }
     
     public static readonly Error None = new(string.Empty, string.Empty, ErrorType.None);
 
     public static Error Validation(string code, string message) =>
         new(code, message, ErrorType.Validation);
+
+    public static Error ValidationWithDetails(
+        string code,
+        string message,
+        IReadOnlyList<ValidationErrorDetail> errors
+    ) => new(code, message, ErrorType.Validation, errors);
 
     public static Error NotFound(string code, string message) =>
         new(code, message, ErrorType.NotFound);
