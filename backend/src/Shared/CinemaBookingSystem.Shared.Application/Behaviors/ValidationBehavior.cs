@@ -28,9 +28,18 @@ public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TReq
 
         if (failures.Count != 0)
         {
-            var error = Error.Validation(
+            var validationErrors = failures
+                .Select(f => new ValidationErrorDetail(
+                    PropertyName: f.PropertyName,
+                    ErrorCode: f.ErrorCode,
+                    ErrorMessage: f.ErrorMessage
+                ))
+                .ToList();
+
+            var error = Error.ValidationWithDetails(
                 "VALIDATION_ERROR",
-                string.Join("; ", failures.Select(f => f.ErrorMessage))
+                "One or more validation errors occurred.",
+                validationErrors
             );
 
             return (TResponse)(object)Result.Failure(error);
