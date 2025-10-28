@@ -1,11 +1,11 @@
-using CinemaBookingSystem.Modules.Movies.Application.Genres.Common;
+using CinemaBookingSystem.Modules.Movies.Application.Genres.Dtos;
 using CinemaBookingSystem.Modules.Movies.Domain.Errors;
 using CinemaBookingSystem.Shared.Application.Abstractions.Data;
 using CinemaBookingSystem.Shared.Application.Messaging;
 using CinemaBookingSystem.Shared.Domain.Common;
 using Dapper;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Genres.Queries.GetGenreById;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Features.Queries.GetGenreById;
 
 public sealed class GetGenreByIdQueryHandler : IQueryHandler<GetGenreByIdQuery, GenreDto>
 {

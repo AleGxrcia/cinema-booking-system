@@ -1,11 +1,11 @@
-using CinemaBookingSystem.Modules.Movies.Application.Genres.Common;
+using CinemaBookingSystem.Modules.Movies.Application.Genres.Dtos;
 using CinemaBookingSystem.Shared.Application.Abstractions.Data;
 using CinemaBookingSystem.Shared.Application.Common;
 using CinemaBookingSystem.Shared.Application.Messaging;
 using CinemaBookingSystem.Shared.Domain.Common;
 using Dapper;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Genres.Queries.GetAllGenres;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Features.Queries.GetAllGenres;
 
 public sealed class GetAllGenresQueryHandler : IQueryHandler<GetAllGenresQuery, PagedResult<GenreDto>>
 {
@@ -49,8 +49,8 @@ public sealed class GetAllGenresQueryHandler : IQueryHandler<GetAllGenresQuery, 
             sql,
             new
             {
-                Skip = request.Skip,
-                Take = request.Take
+                request.Skip,
+                request.Take
             });
 
         return PagedResult<GenreDto>.Success(

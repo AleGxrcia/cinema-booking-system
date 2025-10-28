@@ -1,8 +1,8 @@
-using CinemaBookingSystem.Modules.Movies.Application.Genres.Common;
+using CinemaBookingSystem.Modules.Movies.Application.Genres.Dtos;
 using CinemaBookingSystem.Shared.Application.Common;
 using CinemaBookingSystem.Shared.Application.Messaging;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Genres.Queries.GetAllGenres;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Features.Queries.GetAllGenres;
 
 public sealed record GetAllGenresQuery(
     int PageNumber = PagedRequest.MinPageNumber,

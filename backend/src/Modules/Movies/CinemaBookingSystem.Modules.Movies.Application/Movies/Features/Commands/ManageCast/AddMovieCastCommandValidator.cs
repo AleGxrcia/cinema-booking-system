@@ -1,7 +1,6 @@
-using CinemaBookingSystem.Modules.Movies.Application.Movies.Features.Commands.ManageCast;
 using FluentValidation;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Movies.Commands.ManageCast;
+namespace CinemaBookingSystem.Modules.Movies.Application.Movies.Features.Commands.ManageCast;
 
 public sealed class AddMovieCastCommandValidator : AbstractValidator<AddMovieCastCommand>
 {

@@ -1,6 +1,6 @@
 using CinemaBookingSystem.Shared.Application.Messaging;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Movies.Commands.UpdateMovie;
+namespace CinemaBookingSystem.Modules.Movies.Application.Movies.Features.Commands.UpdateMovie;
 
 public sealed record UpdateMovieCommand(
     Guid MovieId,

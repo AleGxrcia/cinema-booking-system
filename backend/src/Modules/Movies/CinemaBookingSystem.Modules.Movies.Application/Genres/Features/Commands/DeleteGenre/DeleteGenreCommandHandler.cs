@@ -4,7 +4,7 @@ using CinemaBookingSystem.Modules.Movies.Domain.Repositories;
 using CinemaBookingSystem.Shared.Application.Messaging;
 using CinemaBookingSystem.Shared.Domain.Common;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Genres.Commands.DeleteGenre;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Features.Commands.DeleteGenre;
 
 public sealed class DeleteGenreCommandHandler : ICommandHandler<DeleteGenreCommand>
 {

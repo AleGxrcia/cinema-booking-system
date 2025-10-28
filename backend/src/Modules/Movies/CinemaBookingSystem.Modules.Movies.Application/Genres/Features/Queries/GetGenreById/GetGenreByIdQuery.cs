@@ -1,6 +1,6 @@
-using CinemaBookingSystem.Modules.Movies.Application.Genres.Common;
+using CinemaBookingSystem.Modules.Movies.Application.Genres.Dtos;
 using CinemaBookingSystem.Shared.Application.Messaging;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Genres.Queries.GetGenreById;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Features.Queries.GetGenreById;
 
 public sealed record GetGenreByIdQuery(Guid GenreId) : IQuery<GenreDto>;

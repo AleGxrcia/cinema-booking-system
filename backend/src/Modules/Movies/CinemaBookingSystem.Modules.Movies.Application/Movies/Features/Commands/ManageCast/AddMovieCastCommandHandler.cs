@@ -1,11 +1,10 @@
 using CinemaBookingSystem.Modules.Movies.Application.Abstractions.Data;
-using CinemaBookingSystem.Modules.Movies.Application.Movies.Features.Commands.ManageCast;
 using CinemaBookingSystem.Modules.Movies.Domain.Errors;
 using CinemaBookingSystem.Modules.Movies.Domain.Repositories;
 using CinemaBookingSystem.Shared.Application.Messaging;
 using CinemaBookingSystem.Shared.Domain.Common;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Movies.Commands.ManageCast;
+namespace CinemaBookingSystem.Modules.Movies.Application.Movies.Features.Commands.ManageCast;
 
 public sealed class AddMovieCastCommandHandler : ICommandHandler<AddMovieCastCommand>
 {

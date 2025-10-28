@@ -4,7 +4,7 @@ using CinemaBookingSystem.Modules.Movies.Domain.Repositories;
 using CinemaBookingSystem.Shared.Application.Messaging;
 using CinemaBookingSystem.Shared.Domain.Common;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Genres.Commands.DeactivateGenre;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Features.Commands.DeactivateGenre;
 
 public sealed class DeactivateGenreCommandHandler : ICommandHandler<DeactivateGenreCommand>
 {
