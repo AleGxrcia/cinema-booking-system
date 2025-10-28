@@ -7,7 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Shared\CinemaBookingSystem.Shared.Presentation\CinemaBookingSystem.Shared.Presentation.csproj" />
+    <ProjectReference Include="..\..\..\Shared\CinemaBookingSystem.Shared.Presentation.Contracts\CinemaBookingSystem.Shared.Presentation.Contracts.csproj" />
+    <ProjectReference Include="..\..\..\Shared\CinemaBookingSystem.Shared.Presentation.Http\CinemaBookingSystem.Shared.Presentation.Http.csproj" />
     <ProjectReference Include="..\CinemaBookingSystem.Modules.Movies.Infrastructure\CinemaBookingSystem.Modules.Movies.Infrastructure.csproj" />
   </ItemGroup>
 
