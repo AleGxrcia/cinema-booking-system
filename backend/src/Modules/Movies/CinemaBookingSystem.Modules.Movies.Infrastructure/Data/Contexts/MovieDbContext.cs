@@ -1,5 +1,5 @@
 using CinemaBookingSystem.Modules.Movies.Domain.Entities;
-using CinemaBookingSystem.Shared.Infrastructure.Data;
+using CinemaBookingSystem.Shared.Infrastructure.Data.Schemas;
 using Microsoft.EntityFrameworkCore;
 
 namespace CinemaBookingSystem.Modules.Movies.Infrastructure.Data.Contexts;
