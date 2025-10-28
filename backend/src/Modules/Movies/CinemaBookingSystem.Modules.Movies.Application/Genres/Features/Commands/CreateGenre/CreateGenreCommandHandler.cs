@@ -5,7 +5,7 @@ using CinemaBookingSystem.Modules.Movies.Domain.Repositories;
 using CinemaBookingSystem.Shared.Application.Messaging;
 using CinemaBookingSystem.Shared.Domain.Common;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Genres.Commands.CreateGenre;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Features.Commands.CreateGenre;
 
 public sealed class CreateGenreCommandHandler : ICommandHandler<CreateGenreCommand, Result<Guid>>
 {

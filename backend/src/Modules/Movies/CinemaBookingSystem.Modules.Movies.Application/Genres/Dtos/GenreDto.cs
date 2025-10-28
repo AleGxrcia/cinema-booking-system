@@ -1,4 +1,4 @@
-namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Common;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Dtos;
 
 public sealed record GenreDto(
     Guid Id,

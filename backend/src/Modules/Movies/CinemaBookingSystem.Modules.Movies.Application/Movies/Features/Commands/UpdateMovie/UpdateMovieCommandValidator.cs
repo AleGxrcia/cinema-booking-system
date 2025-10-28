@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Movies.Commands.UpdateMovie;
+namespace CinemaBookingSystem.Modules.Movies.Application.Movies.Features.Commands.UpdateMovie;
 
 public sealed class UpdateMovieCommandValidator : AbstractValidator<UpdateMovieCommand>
 {

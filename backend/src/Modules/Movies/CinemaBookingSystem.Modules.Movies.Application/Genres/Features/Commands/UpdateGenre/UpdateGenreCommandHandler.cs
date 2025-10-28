@@ -4,7 +4,7 @@ using CinemaBookingSystem.Modules.Movies.Domain.Repositories;
 using CinemaBookingSystem.Shared.Application.Messaging;
 using CinemaBookingSystem.Shared.Domain.Common;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Genres.Commands.UpdateGenre;
+namespace CinemaBookingSystem.Modules.Movies.Application.Genres.Features.Commands.UpdateGenre;
 
 public sealed class UpdateGenreCommandHandler : ICommandHandler<UpdateGenreCommand>
 {

@@ -5,7 +5,7 @@ using CinemaBookingSystem.Modules.Movies.Domain.ValueObjects;
 using CinemaBookingSystem.Shared.Application.Messaging;
 using CinemaBookingSystem.Shared.Domain.Common;
 
-namespace CinemaBookingSystem.Modules.Movies.Application.Features.Movies.Commands.UpdateMovie;
+namespace CinemaBookingSystem.Modules.Movies.Application.Movies.Features.Commands.UpdateMovie;
 
 public sealed class UpdateMovieCommandHandler : ICommandHandler<UpdateMovieCommand>
 {
