@@ -1,10 +1,10 @@
 using CinemaBookingSystem.Api.Extensions;
-using CinemaBookingSystem.Api.Middlewares;
 using CinemaBookingSystem.Shared.Infrastructure;
+using CinemaBookingSystem.Shared.Presentation.Http;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddSharedPresentationHttp();
 builder.Services.AddProblemDetails();
 
 builder.Services.AddSharedInfrastructure(builder.Configuration);
