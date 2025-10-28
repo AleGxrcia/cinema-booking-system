@@ -1,4 +1,5 @@
 using CinemaBookingSystem.Modules.Movies.Application.Abstractions.Data;
+using CinemaBookingSystem.Modules.Movies.Application.Movies.Features.Commands.ManageCast;
 using CinemaBookingSystem.Modules.Movies.Domain.Errors;
 using CinemaBookingSystem.Modules.Movies.Domain.Repositories;
 using CinemaBookingSystem.Shared.Application.Messaging;
@@ -26,7 +27,7 @@ public sealed class AddMovieCastCommandHandler : ICommandHandler<AddMovieCastCom
         if (movie is null)
             return MovieErrors.NotFound(request.MovieId);
 
-        var result = movie.AddCastMember(request.PersonName, request.Role);
+        var result = movie.AddCastMember(request.PersonName, request.Role, request.Order);
         if (result.IsFailure)
             return result.Error;
 
