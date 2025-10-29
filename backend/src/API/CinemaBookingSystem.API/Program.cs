@@ -1,8 +1,12 @@
 using CinemaBookingSystem.Api.Extensions;
 using CinemaBookingSystem.Shared.Infrastructure;
 using CinemaBookingSystem.Shared.Presentation.Http;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, configuration) => 
+    configuration.ReadFrom.Configuration(context.Configuration));
 
 builder.Services.AddSharedPresentationHttp();
 builder.Services.AddProblemDetails();
@@ -17,6 +21,8 @@ var moduleAssemblies = new[]
 builder.Services.AddModules(builder.Configuration, moduleAssemblies);
 
 var app = builder.Build();
+
+app.UseSerilogRequestLogging();
 
 app.UseExceptionHandler();
 
