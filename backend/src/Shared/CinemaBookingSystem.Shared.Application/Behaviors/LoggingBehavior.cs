@@ -9,7 +9,7 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     where TResponse : notnull
 {
     private readonly ILogger<LoggingBehavior<TRequest, TResponse>> _logger;
-    private const int SlowRequestThresholdSeconds = 3;
+    private const int SlowRequestThresholdMilliseconds = 3000;
 
     public LoggingBehavior(ILogger<LoggingBehavior<TRequest, TResponse>> logger)
     {
@@ -38,7 +38,7 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
 
             var elapsedMs = stopwatch.ElapsedMilliseconds;
 
-            if (elapsedMs > SlowRequestThresholdSeconds)
+            if (elapsedMs > SlowRequestThresholdMilliseconds)
             {
                 _logger.LogWarning(
                     "Slow request detected: {RequestName} took {ElapsedMilliseconds}ms ({ElapsedSeconds:F2}s) to complete. Request: {@Request}",
